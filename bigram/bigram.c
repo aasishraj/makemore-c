@@ -102,7 +102,9 @@ double **convert_to_probabilities(int **freq_matrix, int size) {
         // normalize row
         for (int j = 0; j < size; j++) {
             if (row_sum > 0)
-                prob_matrix[i][j] = (double)freq_matrix[i][j] / row_sum;
+                // prob_matrix[i][j] = 1.0 / TOKENS;  // "untrained model" - all characters are equally likely
+                prob_matrix[i][j] = (double)freq_matrix[i][j] / row_sum; // "trained model" - probability distribution
+
             else
                 prob_matrix[i][j] = 0.0;
         }
@@ -204,7 +206,7 @@ int main() {
     double **probability_distribution = convert_to_probabilities(distribution_matrix, TOKENS);
  
     // generate names
-    int names_count = 40;
+    int names_count = 20;
     for (int i = 0; i < names_count; i++) 
         generate_name(probability_distribution);
 
